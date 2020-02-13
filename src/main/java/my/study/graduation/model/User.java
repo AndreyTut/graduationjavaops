@@ -6,17 +6,20 @@ public class User extends AbstractNamedEntity {
     private String email;
     private String password;
     private Set<Role> roles;
+    private boolean enabled;
 
-    public User(int id, String name, String email, String password, Set<Role> roles) {
+    public User(int id, String name, String email, String password, Set<Role> roles, boolean enabled) {
         super(id, name);
+        this.enabled = enabled;
         this.name = name;
         this.email = email;
         this.password = password;
         this.roles = roles;
     }
 
-    public User(String name, String email, String password, Set<Role> roles) {
+    public User(String name, String email, String password, Set<Role> roles, boolean enabled) {
         super(null, name);
+        this.enabled = enabled;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -45,6 +48,14 @@ public class User extends AbstractNamedEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Set<Role> getRoles() {

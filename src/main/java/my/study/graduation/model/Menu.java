@@ -5,23 +5,23 @@ import java.util.List;
 
 public class Menu extends AbstractBaseEntity {
 
-    private Restoraunt restoraunt;
+    private Restaurant restaurant;
     private List<Dish> dishes;
     private LocalDate day;
 
-    public Menu(Integer id, Restoraunt restoraunt, List<Dish> dishes, LocalDate day) {
+    public Menu(Integer id, Restaurant restaurant, List<Dish> dishes, LocalDate day) {
         super(id);
-        this.restoraunt = restoraunt;
+        this.restaurant = restaurant;
         this.dishes = dishes;
         this.day = day;
     }
 
-    public Restoraunt getRestoraunt() {
-        return restoraunt;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestoraunt(Restoraunt restoraunt) {
-        this.restoraunt = restoraunt;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public List<Dish> getDishes() {
