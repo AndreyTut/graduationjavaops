@@ -6,6 +6,8 @@ public class Money {
 
     public Money(long amountInCents) {
         this.amountInCents = amountInCents;
+        dollars = (int) amountInCents / 100;
+        cents = (int) amountInCents % 100;
     }
 
     public long getAmountInCents() {
@@ -16,9 +18,20 @@ public class Money {
         this.amountInCents = amountInCents;
     }
 
+    private int dollars;
+
+    private int cents;
+
+    public int getDollars() {
+        return dollars;
+    }
+
+    public int getCents() {
+        return cents;
+    }
 
     @Override
     public String toString() {
-        return amountInCents / 100 + "." + amountInCents % 100 + "$";
+        return dollars + "." + cents + "$";
     }
 }

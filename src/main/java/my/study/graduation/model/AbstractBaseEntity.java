@@ -1,12 +1,26 @@
 package my.study.graduation.model;
 
+import org.springframework.data.domain.Persistable;
+
+import javax.persistence.*;
 import java.util.Objects;
 
-public abstract class AbstractBaseEntity {
+@MappedSuperclass
+@Access(value = AccessType.FIELD)
+public abstract class AbstractBaseEntity implements Persistable <Integer>{
+
+    private static final int START_VALUE = 100000;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_gen")
+    @SequenceGenerator(name = "seq_gen", sequenceName = "GLOBAL_SEQ", allocationSize = 1, initialValue = START_VALUE)
     protected Integer id;
 
     protected AbstractBaseEntity(Integer id) {
         this.id = id;
+    }
+
+    public AbstractBaseEntity() {
+
     }
 
     public Integer getId() {
