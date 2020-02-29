@@ -1,19 +1,38 @@
 package my.study.graduation.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "dishes")
 public class Dish extends AbstractNamedEntity {
 
-    private Money price;
+    @Column(name = "price")
+    private int price;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "menu_id", nullable = false)
+    private Menu menu;
 
-    public Dish(int id, String name, Money price) {
+    public Dish(int id, String name, int price) {
         super(id, name);
         this.name = name;
         this.price = price;
     }
 
-    public Dish(String name, Money price) {
+    public Dish(String name, int price) {
         super(null, name);
         this.name = name;
         this.price = price;
+    }
+
+    public Dish() {
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
     public String getName() {
@@ -24,11 +43,11 @@ public class Dish extends AbstractNamedEntity {
         this.name = name;
     }
 
-    public Money getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Money price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

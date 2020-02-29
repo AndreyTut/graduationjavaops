@@ -13,7 +13,7 @@
 
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
     <context:component-scan base-package="my.study.graduation.repository"/>
-    <jpa:repositories base-package="my.study.graduation.repository.datajpa"/>
+    <jpa:repositories base-package="my.study.graduation.repository"/>
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"
