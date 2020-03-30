@@ -1,34 +1,60 @@
 package my.study.graduation.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "votes")
 public class Vote extends AbstractBaseEntity {
 
-    private User user;
-    private Menu menu;
+
+    @Column(name = "user_id")
+    private Integer userId;
+
+    @Column(name = "menu_id")
+    private Integer menuId;
+
+    @Column(name = "day")
     private LocalDate votingDate;
 
-    public Vote(Integer id, User user, Menu menu, LocalDate votingDate) {
+
+    public Vote(Integer id, int userId, int menuId, LocalDate votingDate) {
         super(id);
-        this.user = user;
-        this.menu = menu;
+        this.userId = userId;
+        this.menuId = menuId;
         this.votingDate = votingDate;
     }
 
-    public User getUser() {
-        return user;
+    public Vote(Integer userId, Integer menuId, LocalDate votingDate) {
+        super(null);
+        this.userId = userId;
+        this.menuId = menuId;
+        this.votingDate = votingDate;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public Vote(Integer userId, LocalDate votingDate) {
+        this.userId = userId;
+        this.votingDate = votingDate;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Vote() {
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public Integer getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(int menuId) {
+        this.menuId = menuId;
     }
 
     public LocalDate getVotingDate() {
@@ -37,5 +63,14 @@ public class Vote extends AbstractBaseEntity {
 
     public void setVotingDate(LocalDate votingDate) {
         this.votingDate = votingDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Vote{" +
+                "userId=" + userId +
+                ", menuId=" + menuId +
+                ", votingDate=" + votingDate +
+                '}';
     }
 }

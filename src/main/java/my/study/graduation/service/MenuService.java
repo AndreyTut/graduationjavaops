@@ -5,6 +5,7 @@ import my.study.graduation.repository.CrudMenuRepository;
 import my.study.graduation.to.MenuTo;
 import my.study.graduation.util.ToConverters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,8 @@ public class MenuService {
         return ToConverters.menuListIntoMenuToList(dayMenus);
     }
 
-    public List<MenuTo> getForToDay(){
+    @Cacheable("menuTo")
+    public List<MenuTo> getForToday(){
         return getForDay(LocalDate.now());
     }
 

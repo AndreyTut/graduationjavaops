@@ -17,7 +17,7 @@ public class BaseService<T extends AbstractBaseEntity> {
 
     private final Class<T> type;
 
-    protected final Logger logger=LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     public BaseService(BaseRepository<T> repository, Class<T> type) {
         this.repository = repository;
@@ -26,8 +26,9 @@ public class BaseService<T extends AbstractBaseEntity> {
 
     @Transactional
     public T save(T t) {
-        Assert.notNull(t, "user must not be null");
-        logger.info("saving entity of class {}", type);
+        Assert.notNull(t, "entity must not be null");
+        T persisted = repository.save(t);
+        logger.info("saving entity of class {} wit id {}", type.getSimpleName(), persisted.getId());
         return repository.save(t);
     }
 
@@ -37,6 +38,7 @@ public class BaseService<T extends AbstractBaseEntity> {
     }
 
     public T get(int id) {
+        logger.info("getting entity of class {} with id {}", type.getSimpleName(), id);
         return repository.getById(id).orElseThrow(() -> new NotFoundInDataBaseException(type, id));
     }
 
