@@ -37,8 +37,11 @@ public class VoteService {
     public Map<MenuTo, Long> getVotingResult(LocalDate votingDate) {
         List<Vote> votes = repository.getByVotingDate(votingDate);
         List<MenuTo> menuTos = menuService.getForDay(votingDate);
-        return votes.stream()
-                .collect(Collectors.groupingBy(vote -> menuTos.get(vote.getMenuId()), Collectors.counting()));
+        Map<MenuTo, Long> result = new HashMap<>();
+        Map<Integer, Long> voteMap = votes.stream()
+                .collect(Collectors.groupingBy(Vote::getMenuId, Collectors.counting()));
+        menuTos.forEach(menuTo -> result.put(menuTo, voteMap.get(menuTo.getId())));
+        return result;
     }
 
     public Map<MenuTo, Long> getTodayVotingResult() {

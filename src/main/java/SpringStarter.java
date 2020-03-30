@@ -12,6 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
@@ -28,9 +29,38 @@ public class SpringStarter {
         printItems(service.getAll());
 //        CrudMenuRepository repository = context.getBean(CrudMenuRepository.class);
         MenuService menuService = context.getBean(MenuService.class);
-        Menu menu = new Menu()
+        RestaurantService restaurantService = context.getBean(RestaurantService.class);
+        List<Restaurant> restaurants = restaurantService.getAll();
+        List<Dish> dishes = new ArrayList<>();
+        dishes.add(new Dish("sup", 50));
+        dishes.add(new Dish("potato", 40));
+        dishes.add(new Dish("tea", 30));
+
+        List<Dish> dishes1 = new ArrayList<>();
+        dishes1.add(new Dish("sup", 50));
+        dishes1.add(new Dish("potato", 40));
+        dishes1.add(new Dish("tea", 30));
+
+        List<Dish> dishes2 = new ArrayList<>();
+        dishes2.add(new Dish("sup", 50));
+        dishes2.add(new Dish("potato", 40));
+        dishes2.add(new Dish("tea", 30));
+        Menu menu = new Menu(restaurants.get(0), dishes, LocalDate.now());
+        Menu menu1 = new Menu(restaurants.get(1), dishes1, LocalDate.now());
+        Menu menu2 = new Menu(restaurants.get(2), dishes2, LocalDate.now());
+        menuService.save(menu);
+        menuService.save(menu1);
+        menuService.save(menu2);
         List<MenuTo> menus = menuService.getForToday();// (LocalDate.of(2015, 5, 30));
         printItems(menus);
+
+        VoteService voteService = context.getBean(VoteService.class);
+        voteService.vote(menu.getId(), user.getId());
+        voteService.vote(menu.getId(), user1.getId());
+        voteService.vote(menu1.getId(), user2.getId());
+        voteService.vote(menu2.getId(), user3.getId());
+        System.out.println("**********************************");
+        System.out.println(voteService.getTodayVotingResult());
     }
 
     private static <T> void printItems(List<T> list) {
