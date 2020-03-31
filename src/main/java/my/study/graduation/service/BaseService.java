@@ -28,7 +28,7 @@ public class BaseService<T extends AbstractBaseEntity> {
     public T save(T t) {
         Assert.notNull(t, "entity must not be null");
         T persisted = repository.save(t);
-        logger.info("saving entity of class {} wit id {}", type.getSimpleName(), persisted.getId());
+        logger.info("saving entity of class {} with id {}", type.getSimpleName(), persisted.getId());
         return repository.save(t);
     }
 

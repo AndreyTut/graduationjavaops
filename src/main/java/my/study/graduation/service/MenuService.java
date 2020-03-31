@@ -37,4 +37,8 @@ public class MenuService {
     public Menu save(Menu menu){
         return repository.save(menu);
     }
+
+    public Menu get(int id){
+        return repository.getById(id).get();
+    }
 }

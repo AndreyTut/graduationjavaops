@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class ToConverters {
 
-    private static MenuTo menuIntoMenuTo(Menu menu) {
+    public static MenuTo menuIntoMenuTo(Menu menu) {
         Map<String, Double> dishMap = new HashMap<>();
         menu.getDishes().forEach(dish -> dishMap.put(dish.getName(), dish.getPrice() / 100.0));
         return new MenuTo(menu.getId(), menu.getRestaurant().getName(), dishMap);

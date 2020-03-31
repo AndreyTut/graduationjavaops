@@ -22,9 +22,9 @@ public class SpringStarter {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-db.xml", "spring/spring-app.xml");
         System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
         UserService service = context.getBean(UserService.class);
-        User user = service.save(new User("Dmytro", "emael@com.com", "efefefc", EnumSet.of(Role.ROLE_USER), true));
+        User user = service.save(new User("Dmytro", "email@com.com", "efefefc", EnumSet.of(Role.ROLE_USER), true));
         User user1 = service.save(new User("petro", "petro@com.com", "efefefc", EnumSet.of(Role.ROLE_USER), true));
-        User user2 = service.save(new User("vaso", "vaso+@com.com", "efefefc", EnumSet.of(Role.ROLE_USER), true));
+        User user2 = service.save(new User("vaso", "vasv@gmail.com", "efefefc", EnumSet.of(Role.ROLE_USER), true));
         User user3 = service.get(100001);
         printItems(service.getAll());
 //        CrudMenuRepository repository = context.getBean(CrudMenuRepository.class);

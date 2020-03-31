@@ -4,6 +4,7 @@ import my.study.graduation.model.Menu;
 import my.study.graduation.model.Vote;
 import my.study.graduation.repository.CrudVoteRepository;
 import my.study.graduation.to.MenuTo;
+import my.study.graduation.util.ToConverters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,10 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static my.study.graduation.util.ToConverters.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -48,4 +52,8 @@ public class VoteService {
         return getVotingResult(LocalDate.now());
     }
 
+    public MenuTo getUserVote(int id, LocalDate localDate) {
+        Optional<Vote> userVote = repository.getByUserIdAndVotingDate(id, localDate);
+        return userVote.map(vote -> menuIntoMenuTo(menuService.get(vote.getMenuId()))).orElse(null);
+    }
 }
