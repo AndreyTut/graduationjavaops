@@ -44,7 +44,7 @@ public class VoteService {
         Map<MenuTo, Long> result = new HashMap<>();
         Map<Integer, Long> voteMap = votes.stream()
                 .collect(Collectors.groupingBy(Vote::getMenuId, Collectors.counting()));
-        menuTos.forEach(menuTo -> result.put(menuTo, voteMap.get(menuTo.getId())));
+        menuTos.forEach(menuTo -> result.put(menuTo, voteMap.get(menuTo.getId()) == null ? 0L : voteMap.get(menuTo.getId())));
         return result;
     }
 
