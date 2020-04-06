@@ -26,7 +26,7 @@ public class TestData {
             , LocalDate.of(2015, 5, 30));
     public static Menu MENU1 = new Menu(START_SEQ + 6, RESTAURANT_3, Arrays.asList(new Dish(100010,"dish2", 1231))
             , LocalDate.of(2015, 5, 30));
-    public static Menu MENU_NEW = new Menu(new Restaurant("newrest"), Arrays.asList(new Dish("dish", 1231)), LocalDate.now());
+    public static Menu MENU_NEW = new Menu(RESTAURANT_2, Arrays.asList(new Dish("dish", 1231)), LocalDate.now());
     public static Menu MENU_UPD = new Menu(START_SEQ + 5, RESTAURANT_1, Arrays.asList(new Dish(100009, "dish1", 1231))
             , LocalDate.of(2015, 5, 30));
 

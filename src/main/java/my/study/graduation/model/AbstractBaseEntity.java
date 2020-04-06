@@ -3,6 +3,7 @@ package my.study.graduation.model;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
+import java.beans.Transient;
 import java.util.Objects;
 
 @MappedSuperclass
@@ -31,6 +32,7 @@ public abstract class AbstractBaseEntity implements Persistable <Integer>{
         this.id = id;
     }
 
+    @Transient
     public boolean isNew() {
         return this.id == null;
     }

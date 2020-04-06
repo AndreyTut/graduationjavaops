@@ -4,6 +4,7 @@ import my.study.graduation.model.Menu;
 import my.study.graduation.repository.CrudMenuRepository;
 import my.study.graduation.to.MenuTo;
 import my.study.graduation.util.ToConverters;
+import my.study.graduation.util.exceptions.NotFoundInDataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -29,16 +30,16 @@ public class MenuService {
     }
 
     @Cacheable("menuTo")
-    public List<MenuTo> getForToday(){
+    public List<MenuTo> getForToday() {
         return getForDay(LocalDate.now());
     }
 
     @Transactional
-    public Menu save(Menu menu){
+    public Menu save(Menu menu) {
         return repository.save(menu);
     }
 
-    public Menu get(int id){
-        return repository.getById(id).get();
+    public Menu get(int id) {
+        return repository.getById(id).orElseThrow(() -> new NotFoundInDataBaseException(Menu.class, id));
     }
 }

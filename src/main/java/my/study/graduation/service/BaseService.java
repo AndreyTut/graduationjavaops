@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public class BaseService<T extends AbstractBaseEntity> {
+public abstract class BaseService<T extends AbstractBaseEntity> {
 
     private BaseRepository<T> repository;
 
@@ -27,8 +27,9 @@ public class BaseService<T extends AbstractBaseEntity> {
     @Transactional
     public T save(T t) {
         Assert.notNull(t, "entity must not be null");
-        T persisted = repository.save(t);
-        logger.info("saving entity of class {} with id {}", type.getSimpleName(), persisted.getId());
+        Integer id = t.getId();
+        String message = id == null ? "saving new entity of class {}" : "saving entity of class {} with id = " + id;
+        logger.info(message, type.getSimpleName());
         return repository.save(t);
     }
 

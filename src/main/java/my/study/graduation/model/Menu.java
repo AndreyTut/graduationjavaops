@@ -1,5 +1,11 @@
 package my.study.graduation.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -8,12 +14,13 @@ import java.util.List;
 @Table(name = "menus")
 public class Menu extends AbstractBaseEntity {
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Restaurant restaurant;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu", cascade = CascadeType.ALL)
     private List<Dish> dishes;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "day")
     private LocalDate day;
 
@@ -57,12 +64,12 @@ public class Menu extends AbstractBaseEntity {
         this.day = day;
     }
 
-    @Override
-    public String toString() {
-        return "Menu{" + id +
-                "restaurant=" + restaurant +
-                ", dishes=" + dishes +
-                ", day=" + day +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Menu{" + id +
+//                "restaurant=" + restaurant +
+//                ", dishes=" + dishes +
+//                ", day=" + day +
+//                '}';
+//    }
 }
