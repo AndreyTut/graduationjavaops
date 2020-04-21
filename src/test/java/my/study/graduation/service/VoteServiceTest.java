@@ -2,6 +2,7 @@ package my.study.graduation.service;
 
 import my.study.graduation.model.Menu;
 import my.study.graduation.to.MenuTo;
+import my.study.graduation.to.RestaurantWithVoices;
 import my.study.graduation.util.ToConverters;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -13,10 +14,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static my.study.graduation.service.TestData.*;
 import static org.assertj.core.api.Assertions.*;
@@ -45,11 +43,8 @@ public class VoteServiceTest {
 
     @Test
     public void getVotingResult() {
-        Map<MenuTo, Long> map = service.getVotingResult(LocalDate.of(2015, 5, 30));
-        assertThat(map.size()).isEqualTo(2);
-        assertThat(map).containsValues(2L, 0L);
-        assertThat(getKey(map, 0L)).isEqualToComparingFieldByField(MENU_TO_2);
-        assertThat(getKey(map, 2L)).isEqualToComparingFieldByField(MENU_TO_1);
+        List<RestaurantWithVoices> list = service.getVotingResult(LocalDate.of(2015, 5, 30));
+        assertThat(list).usingFieldByFieldElementComparator().isEqualTo(voteResults);
     }
 
     @Test

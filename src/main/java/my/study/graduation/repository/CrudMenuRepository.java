@@ -12,17 +12,14 @@ import java.util.Optional;
 
 public interface CrudMenuRepository extends Repository<Menu, Integer> {
 
-    public Optional<Menu> getById(int id);
+    @Query("SELECT m FROM Menu m LEFT JOIN FETCH m.dishes LEFT JOIN FETCH m.restaurant WHERE m.id=:id")
+    public Optional<Menu> getById(@Param("id") int id);
 
-
-//fixme n+1 problem
-  //  @Query("SELECT m FROM Menu m LEFT JOIN FETCH m.dishes LEFT JOIN FETCH m.restaurant WHERE m.day=:localDate")
-//    @Query("SELECT m FROM Menu m LEFT JOIN FETCH m.dishes WHERE m.day=:localDate")
+    @Query("SELECT m FROM Menu m LEFT JOIN FETCH m.dishes LEFT JOIN FETCH m.restaurant WHERE m.day=:localDate")
     public List<Menu> getByDay(@Param("localDate") LocalDate localDate);
 
     public Menu save(Menu menu);
 
-    //TODO delite this method after debugging
     @Query("SELECT m FROM Menu m")
     public List<Menu> getAll();
 }

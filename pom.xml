@@ -5,13 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>my.study</groupId>
-    <artifactId>graduationjavaops</artifactId>
+    <artifactId>graduation</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <jackson-json.version>2.10.1</jackson-json.version>
+        <tomcat.version>9.0.27</tomcat.version>
+
 
         <spring.version>5.2.0.RELEASE</spring.version>
         <spring-data-jpa.version>2.2.0.RELEASE</spring-data-jpa.version>
@@ -30,7 +34,7 @@
     </properties>
 
     <build>
-        <finalName>graduationjavaops</finalName>
+        <finalName>graduation</finalName>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
@@ -50,6 +54,25 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.7.7</version>
+                <configuration>
+
+                    <deployables>
+                        <deployable>
+                            <groupId>my.study</groupId>
+                            <artifactId>graduation</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>${project.build.finalName}</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -63,17 +86,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-            <version>${slf4j.version}</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -124,11 +139,14 @@
         </dependency>
 
         <!--DataBase-->
+
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-            <version>2.3.4</version>
+            <version>2.4.0</version>
+            <scope>compile</scope>
         </dependency>
+
 
         <!--Test-->
         <dependency>
@@ -148,6 +166,35 @@
             <artifactId>assertj-core</artifactId>
             <version>3.13.2</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>${tomcat.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <!--JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-json.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>${jackson-json.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-json.version}</version>
         </dependency>
 
 

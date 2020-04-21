@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 public abstract class BaseController<T extends AbstractBaseEntity> {
@@ -32,7 +33,7 @@ public abstract class BaseController<T extends AbstractBaseEntity> {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody T t) {
+    public ResponseEntity<?> create(@Valid @RequestBody T t) {
         if (t.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -41,7 +42,7 @@ public abstract class BaseController<T extends AbstractBaseEntity> {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody T t) {
+    public ResponseEntity<?> update(@Valid @RequestBody T t) {
         if (t.getId() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

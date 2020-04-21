@@ -2,11 +2,13 @@ package my.study.graduation.service;
 
 import my.study.graduation.model.*;
 import my.study.graduation.to.MenuTo;
+import my.study.graduation.to.RestaurantWithVoices;
 import my.study.graduation.util.ToConverters;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 
 public class TestData {
 
@@ -24,7 +26,7 @@ public class TestData {
 
     public static Menu MENU = new Menu(START_SEQ + 5, RESTAURANT_2, Arrays.asList(new Dish(100009, "dish1", 1231))
             , LocalDate.of(2015, 5, 30));
-    public static Menu MENU1 = new Menu(START_SEQ + 6, RESTAURANT_3, Arrays.asList(new Dish(100010,"dish2", 1231))
+    public static Menu MENU1 = new Menu(START_SEQ + 6, RESTAURANT_3, Arrays.asList(new Dish(100010, "dish2", 1231))
             , LocalDate.of(2015, 5, 30));
     public static Menu MENU_NEW = new Menu(RESTAURANT_2, Arrays.asList(new Dish("dish", 1231)), LocalDate.now());
     public static Menu MENU_UPD = new Menu(START_SEQ + 5, RESTAURANT_1, Arrays.asList(new Dish(100009, "dish1", 1231))
@@ -32,4 +34,8 @@ public class TestData {
 
     public static final MenuTo MENU_TO_1 = ToConverters.menuIntoMenuTo(MENU);
     public static final MenuTo MENU_TO_2 = ToConverters.menuIntoMenuTo(MENU1);
+
+    public static final List<RestaurantWithVoices> voteResults =
+            Arrays.asList(new RestaurantWithVoices(RESTAURANT_2.getName(), 2),
+                    new RestaurantWithVoices(RESTAURANT_3.getName(), 0));
 }

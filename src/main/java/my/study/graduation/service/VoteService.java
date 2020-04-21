@@ -4,16 +4,14 @@ import my.study.graduation.model.Menu;
 import my.study.graduation.model.Vote;
 import my.study.graduation.repository.CrudVoteRepository;
 import my.study.graduation.to.MenuTo;
+import my.study.graduation.to.RestaurantWithVoices;
 import my.study.graduation.util.ToConverters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static my.study.graduation.util.ToConverters.*;
@@ -38,17 +36,20 @@ public class VoteService {
         repository.save(vote);
     }
 
-    public Map<MenuTo, Long> getVotingResult(LocalDate votingDate) {
+    public List<RestaurantWithVoices> getVotingResult(LocalDate votingDate) {
         List<Vote> votes = repository.getByVotingDate(votingDate);
         List<MenuTo> menuTos = menuService.getForDay(votingDate);
         Map<MenuTo, Long> result = new HashMap<>();
+        List<RestaurantWithVoices> resultList = new ArrayList<>();
         Map<Integer, Long> voteMap = votes.stream()
                 .collect(Collectors.groupingBy(Vote::getMenuId, Collectors.counting()));
-        menuTos.forEach(menuTo -> result.put(menuTo, voteMap.get(menuTo.getId()) == null ? 0L : voteMap.get(menuTo.getId())));
-        return result;
+        menuTos.forEach(menuTo -> resultList.add(new RestaurantWithVoices(menuTo.getRestaurant(),
+                voteMap.get(menuTo.getId()) == null ? 0 : voteMap.get(menuTo.getId()).intValue())));
+        resultList.sort((r1, r2) -> r2.getVoises() - r1.getVoises());
+        return resultList;
     }
 
-    public Map<MenuTo, Long> getTodayVotingResult() {
+    public List<RestaurantWithVoices> getTodayVotingResult() {
         return getVotingResult(LocalDate.now());
     }
 
