@@ -14,9 +14,9 @@ public class TestData {
 
     public static final int START_SEQ = 100000;
 
-    public static final User USER = new User(START_SEQ, "User", "user@yandex.ru", "password", EnumSet.of(Role.ROLE_USER), true);
+    public static final User USER = new User(START_SEQ, "User", "user@yandex.ru", "{noop}password", EnumSet.of(Role.ROLE_USER), true);
     public static final User USER_UPD = new User(START_SEQ, "User", "user@yandex.ru", "changed passw", EnumSet.of(Role.ROLE_USER), true);
-    public static final User ADMIN = new User(START_SEQ + 1, "Admin", "admin@gmail.com", "admin", EnumSet.of(Role.ROLE_ADMIN), true);
+    public static final User ADMIN = new User(START_SEQ + 1, "Admin", "admin@gmail.com", "{noop}admin", EnumSet.of(Role.ROLE_ADMIN), true);
 
 
     public static final Restaurant RESTAURANT_1 = new Restaurant(START_SEQ + 2, "Restor_1");
