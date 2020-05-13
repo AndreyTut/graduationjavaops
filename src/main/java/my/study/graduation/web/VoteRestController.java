@@ -1,5 +1,6 @@
 package my.study.graduation.web;
 
+import my.study.graduation.service.UserService;
 import my.study.graduation.service.VoteService;
 import my.study.graduation.to.MenuTo;
 import my.study.graduation.to.RestaurantWithVoices;
@@ -7,42 +8,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/votes")
+@RequestMapping("rest/votes")
 public class VoteRestController {
 
     private VoteService service;
 
+    private UserService userService;
+
     @Autowired
-    public VoteRestController(VoteService service) {
+    public VoteRestController(VoteService service, UserService userService) {
         this.service = service;
+        this.userService = userService;
     }
 
-    //fixme not serialize MenuTo into JSON, just in String
     @GetMapping
     public ResponseEntity<List<RestaurantWithVoices>> getVotes(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate localDate) {
-//        Map<MenuTo, Long> map = service.getVotingResult(localDate);
         return new ResponseEntity<>(service.getVotingResult(localDate), HttpStatus.OK);
     }
 
     @GetMapping("/today")
     public ResponseEntity<List<RestaurantWithVoices>> getCurrentVotes() {
-//        Map<MenuTo, Long> map = service.getTodayVotingResult();
         return new ResponseEntity<>(service.getTodayVotingResult(), HttpStatus.OK);
     }
 
-    @GetMapping("/vote")
-    public ResponseEntity<?> vote(@RequestParam int userId, @RequestParam int menuId) {
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
+    //TODO after debugging change time to 11.00
+    @PostMapping("/vote")
+    public ResponseEntity<?> vote(@RequestParam int menuId, Principal principal) {
+        int userId = userService.getId(principal.getName());
+        if (LocalTime.now().isAfter(LocalTime.of(23, 59))) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         service.vote(menuId, userId);
@@ -50,10 +51,10 @@ public class VoteRestController {
     }
 
     @GetMapping("/uservote")
-    public ResponseEntity<MenuTo> getUserVote(@RequestParam int id,
-                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-
-        MenuTo userVote = service.getUserVote(id, date);
+    public ResponseEntity<MenuTo> getUserVote(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+                                              Principal principal) {
+        int userId = userService.getId(principal.getName());
+        MenuTo userVote = service.getUserVote(userId, date);
         return userVote != null
                 ? new ResponseEntity<>(userVote, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -21,8 +21,8 @@ import java.util.List;
 public class SpringStarter {
     public static void main(String[] args) throws NotFoundException {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-db.xml", "spring/spring-app.xml");
-//        System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
-//        UserService service = context.getBean(UserService.class);
+        System.out.println("Bean definition names: " + Arrays.toString(context.getBeanDefinitionNames()));
+        UserService service = context.getBean(UserService.class);
 //        RestaurantService restaurantService = context.getBean(RestaurantService.class);
 //        User user = service.save(new User("Dmytro", "email@com.com", "efefefc", EnumSet.of(Role.ROLE_USER), true));
 //        User user1 = service.save(new User("petro", "petro@com.com", "efefefc", EnumSet.of(Role.ROLE_USER), true));

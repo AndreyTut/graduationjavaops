@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-@Table(name = "users") //, uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
+@Table(name = "users")
 public class User extends AbstractNamedEntity {
 
     @Column(name = "email", unique = true, nullable = false)
@@ -18,7 +18,7 @@ public class User extends AbstractNamedEntity {
 
     @Column
     @NotBlank
-    @Size(min = 5, max = 15)
+    @Size(min = 5, max = 150)
     private String password;
 
     @Enumerated(EnumType.STRING)

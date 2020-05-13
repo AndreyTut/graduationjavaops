@@ -3,8 +3,6 @@ package my.study.graduation.service;
 import my.study.graduation.util.exceptions.*;
 import my.study.graduation.model.AbstractBaseEntity;
 import my.study.graduation.repository.BaseRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -17,8 +15,6 @@ public abstract class BaseService<T extends AbstractBaseEntity> {
 
     private final Class<T> type;
 
-    protected final Logger logger = LoggerFactory.getLogger(getClass());
-
     public BaseService(BaseRepository<T> repository, Class<T> type) {
         this.repository = repository;
         this.type = type;
@@ -27,9 +23,6 @@ public abstract class BaseService<T extends AbstractBaseEntity> {
     @Transactional
     public T save(T t) {
         Assert.notNull(t, "entity must not be null");
-        Integer id = t.getId();
-        String message = id == null ? "saving new entity of class {}" : "saving entity of class {} with id = " + id;
-        logger.info(message, type.getSimpleName());
         return repository.save(t);
     }
 
@@ -39,10 +32,8 @@ public abstract class BaseService<T extends AbstractBaseEntity> {
     }
 
     public T get(int id) {
-        logger.info("getting entity of class {} with id {}", type.getSimpleName(), id);
         return repository.getById(id).orElseThrow(() -> new NotFoundInDataBaseException(type, id));
     }
-
 
     @Transactional
     public void delete(int id) {

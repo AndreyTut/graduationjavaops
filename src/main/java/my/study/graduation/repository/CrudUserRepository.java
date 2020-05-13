@@ -16,4 +16,7 @@ public interface CrudUserRepository extends BaseRepository<User> {
 
     @Query("SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=:email")
     Optional<User> getByEmail(@Param("email") String email);
+
+    @Query("SELECT u.id FROM User u WHERE u.email=:email")
+    Optional<Integer> getIdByEmail(@Param("email") String email);
 }

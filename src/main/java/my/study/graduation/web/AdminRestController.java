@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("admin/users")
-public class UserRestController extends BaseController<User> {
+@RequestMapping("rest/admin/users")
+public class AdminRestController extends BaseController<User> {
 
     private final UserService service;
 
     @Autowired
-    public UserRestController(UserService service) {
+    public AdminRestController(UserService service) {
         super(service);
         this.service = service;
     }

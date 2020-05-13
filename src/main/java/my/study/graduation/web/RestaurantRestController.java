@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/restaurants")
+@RequestMapping("rest/admin/restaurants")
 public class RestaurantRestController extends BaseController<Restaurant> {
 
     @Autowired

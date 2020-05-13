@@ -8,18 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/menus")
+@RequestMapping("rest/menus")
 public class MenuRestController {
 
     private MenuService service;
 
-    //TODO delete after ebugging
+    //TODO delete after debugging
     @Autowired
     private CrudMenuRepository repository;
 
@@ -38,27 +39,15 @@ public class MenuRestController {
 
     @GetMapping("/today")
     private ResponseEntity<List<MenuTo>> getToday() {
-        List<MenuTo> list = service.getForDay(LocalDate.now());
+        List<MenuTo> list = service.getForToday();
         return list != null & !list.isEmpty()
                 ? new ResponseEntity<>(list, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping
-    private ResponseEntity<Menu> create(@RequestBody Menu menu) {
-        menu.setDay(LocalDate.now());
-        service.save(menu);
-        return new ResponseEntity<>(menu, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/{id}")
-    private Menu get(@PathVariable int id){
-        return service.get(id);
-    }
-
     //TODO delete after debugging
     @GetMapping
-    private List<Menu> getAll(){
+    private List<Menu> getAll() {
         return repository.getAll();
     }
 }
