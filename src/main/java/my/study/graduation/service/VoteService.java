@@ -39,7 +39,6 @@ public class VoteService {
     public List<RestaurantWithVoices> getVotingResult(LocalDate votingDate) {
         List<Vote> votes = repository.getByVotingDate(votingDate);
         List<MenuTo> menuTos = menuService.getForDay(votingDate);
-        Map<MenuTo, Long> result = new HashMap<>();
         List<RestaurantWithVoices> resultList = new ArrayList<>();
         Map<Integer, Long> voteMap = votes.stream()
                 .collect(Collectors.groupingBy(Vote::getMenuId, Collectors.counting()));

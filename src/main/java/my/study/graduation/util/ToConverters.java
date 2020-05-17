@@ -18,6 +18,7 @@ public class ToConverters {
 
     public static List<MenuTo> menuListIntoMenuToList(List<Menu> menus) {
         return menus.stream()
+                .distinct()
                 .map(ToConverters::menuIntoMenuTo)
                 .collect(Collectors.toList());
     }

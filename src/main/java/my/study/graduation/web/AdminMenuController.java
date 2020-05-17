@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("rest/admin/menus")
-public class AdminMenuController {
+public class AdminMenuController extends AbstractBaseControllerExceptionHandler {
 
     private MenuService service;
 

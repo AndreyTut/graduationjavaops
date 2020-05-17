@@ -12,6 +12,8 @@ public class RootController {
     @GetMapping
     @ResponseBody
     public String rootAnswer() {
-        return "Hello from my graduation project! ;)";
+        return "<h1>Hello from my graduation project! ;)</h1>";
     }
+
+
 }

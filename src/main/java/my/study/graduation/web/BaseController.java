@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-public abstract class BaseController<T extends AbstractBaseEntity> {
+public abstract class BaseController<T extends AbstractBaseEntity> extends AbstractBaseControllerExceptionHandler{
     private BaseService<T> service;
 
     public BaseController(BaseService<T> service) {

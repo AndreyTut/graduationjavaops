@@ -26,6 +26,7 @@ public class MenuService {
 
     public List<MenuTo> getForDay(LocalDate localDate) {
         List<Menu> dayMenus = repository.getByDay(localDate);
+        System.out.println(dayMenus);
         return ToConverters.menuListIntoMenuToList(dayMenus);
     }
 

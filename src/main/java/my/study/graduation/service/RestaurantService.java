@@ -12,5 +12,4 @@ public class RestaurantService extends BaseService<Restaurant> {
     public RestaurantService(CrudRestaurantRepository repository) {
         super(repository, Restaurant.class);
     }
-
 }

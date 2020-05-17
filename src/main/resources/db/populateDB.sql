@@ -35,5 +35,6 @@ VALUES ('2015-05-30', 100005, 100000),
 
 INSERT INTO DISHES (NAME, PRICE, MENU_ID)
 VALUES ('dish1', 1231, 100005),
-       ('dish2', 1231, 100006)
+       ('dish2', 1231, 100006),
+       ('dish3', 1231, 100006)
 

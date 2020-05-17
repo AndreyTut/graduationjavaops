@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("rest/votes")
-public class VoteRestController {
+public class VoteRestController extends AbstractBaseControllerExceptionHandler {
 
     private VoteService service;
 
@@ -30,8 +30,8 @@ public class VoteRestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RestaurantWithVoices>> getVotes(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate localDate) {
-        return new ResponseEntity<>(service.getVotingResult(localDate), HttpStatus.OK);
+    public ResponseEntity<List<RestaurantWithVoices>> getVotes(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return new ResponseEntity<>(service.getVotingResult(date), HttpStatus.OK);
     }
 
     @GetMapping("/today")

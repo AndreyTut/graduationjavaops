@@ -38,13 +38,13 @@ public class MenuTo {
     }
 
 
-
-    @Override
-    public String toString() {
-        return "MenuTo{" +
-                "restaurant=" + restaurant +
-                ", dishes=" + dishes +
-                ", id=" + id +
-                '}';
-    }
+//
+//    @Override
+//    public String toString() {
+//        return "MenuTo{" +
+//                "restaurant=" + restaurant +
+//                ", dishes=" + dishes +
+//                ", id=" + id +
+//                '}';
+//    }
 }
