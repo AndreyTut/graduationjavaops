@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 public class ToConverters {
 
     public static MenuTo menuIntoMenuTo(Menu menu) {
-        Map<String, Double> dishMap = new HashMap<>();
-        menu.getDishes().forEach(dish -> dishMap.put(dish.getName(), dish.getPrice() / 100.0));
+        Map<String, String> dishMap = new HashMap<>();
+        menu.getDishes().forEach(dish -> dishMap.put(dish.getName(), String.format("%.2f $", dish.getPrice() / 100.0)));
         return new MenuTo(menu.getId(), menu.getRestaurant().getName(), dishMap);
     }
 

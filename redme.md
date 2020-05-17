@@ -254,5 +254,114 @@ curl --location --request POST 'http://localhost:8080/graduation/rest/admin/menu
 "price": 1050
 }
 ]
+}  '  
+
+curl --location --request POST 'http://localhost:8080/graduation/rest/admin/menus' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' \
+--data-raw '{
+"restaurant": {
+"id": 100003,
+"name": "Restor_2"
+},
+"dishes": [
+{
+"name": "fish&chips",
+"price": 2000
+},
+{
+"name": "coffee",
+"price": 100
+}
+]
+}  '  
+
+curl --location --request POST 'http://localhost:8080/graduation/rest/admin/menus' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' \
+--data-raw '{
+"restaurant": {
+"id": 100004,
+"name": "Restor_3"
+},
+"dishes": [
+{
+"name": "steak",
+"price": 20000
+},
+{
+"name": "rice",
+"price": 1000
+},
+{
+"name": "beer",
+"price": 1000
+}
+]
 }  '
+
+User requests list of menus to make his decision:
+
+ curl --location --request GET 'http://localhost:8080/graduation/rest/menus/today' \
+ --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'  
+ 
+ The answer:  
+ 
+ [
+     {
+         "restaurant": "Restor_1",
+         "dishes": {
+             "banana": "10,00 $",
+             "potato": "10,00 $",
+             "wine": "10,50 $"
+         },
+         "id": 100013
+     },
+     {
+         "restaurant": "Restor_2",
+         "dishes": {
+             "fish&chips": "20,00 $",
+             "coffee": "1,00 $"
+         },
+         "id": 100017
+     },
+     {
+         "restaurant": "Restor_3",
+         "dishes": {
+             "steak": "200,00 $",
+             "rice": "10,00 $",
+             "beer": "10,00 $"
+         },
+         "id": 100020
+     }
+ ]  
+ 
+ User chooses Restor_3 and votes for it:  
+ 
+ curl --location --request POST 'http://localhost:8080/graduation/rest/votes/vote?menuId=100020' \
+ --header 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='
+ 
+ Admin or user can check results of vote:
+ 
+ curl --location --request GET 'http://localhost:8080/graduation/rest/votes/today' \
+ --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'  
+ 
+ The answer is:  
+ 
+ [
+     {
+         "name": "Restor_3",
+         "voises": 1
+     },
+     {
+         "name": "Restor_1",
+         "voises": 0
+     },
+     {
+         "name": "Restor_2",
+         "voises": 0
+     }
+ ]
+ 
+ 
 

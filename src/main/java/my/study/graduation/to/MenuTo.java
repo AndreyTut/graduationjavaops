@@ -4,10 +4,10 @@ import java.util.Map;
 
 public class MenuTo {
     private String restaurant;
-    private Map<String, Double> dishes;
+    private Map<String, String> dishes;
     private int id;
 
-    public MenuTo(int id, String restaurant, Map<String, Double> dishes) {
+    public MenuTo(int id, String restaurant, Map<String, String> dishes) {
         this.restaurant = restaurant;
         this.dishes = dishes;
         this.id = id;
@@ -29,11 +29,11 @@ public class MenuTo {
         this.id = id;
     }
 
-    public Map<String, Double> getDishes() {
+    public Map<String, String> getDishes() {
         return dishes;
     }
 
-    public void setDishes(Map<String, Double> dishes) {
+    public void setDishes(Map<String, String> dishes) {
         this.dishes = dishes;
     }
 
