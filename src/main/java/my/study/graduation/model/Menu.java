@@ -3,6 +3,7 @@ package my.study.graduation.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,9 +12,11 @@ import java.util.List;
 public class Menu extends AbstractBaseEntity {
 
     @ManyToOne
+    @NotNull
     private Restaurant restaurant;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "menu", cascade = CascadeType.ALL)
+    @NotNull
     private List<Dish> dishes;
 
     @JsonFormat(pattern = "yyyy-MM-dd")

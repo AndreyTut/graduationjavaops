@@ -39,11 +39,10 @@ public class VoteRestController extends AbstractBaseControllerExceptionHandler {
         return new ResponseEntity<>(service.getTodayVotingResult(), HttpStatus.OK);
     }
 
-    //TODO after debugging change time to 11.00
     @PostMapping("/vote")
     public ResponseEntity<?> vote(@RequestParam int menuId, Principal principal) {
         int userId = userService.getId(principal.getName());
-        if (LocalTime.now().isAfter(LocalTime.of(23, 59))) {
+        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         service.vote(menuId, userId);

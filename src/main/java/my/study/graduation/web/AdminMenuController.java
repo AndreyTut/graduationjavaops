@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @RestController
@@ -22,7 +23,7 @@ public class AdminMenuController extends AbstractBaseControllerExceptionHandler 
     }
 
     @PostMapping
-    private ResponseEntity<Menu> create(@RequestBody Menu menu) {
+    private ResponseEntity<Menu> create(@RequestBody @Valid Menu menu) {
         menu.setDay(LocalDate.now());
         service.save(menu);
         return new ResponseEntity<>(menu, HttpStatus.CREATED);

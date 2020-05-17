@@ -1,20 +1,21 @@
 package my.study.graduation.service;
 
-import my.study.graduation.model.Menu;
 import my.study.graduation.model.Vote;
 import my.study.graduation.repository.CrudVoteRepository;
 import my.study.graduation.to.MenuTo;
 import my.study.graduation.to.RestaurantWithVoices;
-import my.study.graduation.util.ToConverters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static my.study.graduation.util.ToConverters.*;
+import static my.study.graduation.util.ToConverters.menuIntoMenuTo;
 
 @Service
 @Transactional(readOnly = true)

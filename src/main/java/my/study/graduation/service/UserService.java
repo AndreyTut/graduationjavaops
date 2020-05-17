@@ -1,14 +1,13 @@
 package my.study.graduation.service;
 
-import my.study.graduation.util.exceptions.*;
 import my.study.graduation.model.User;
 import my.study.graduation.repository.CrudUserRepository;
+import my.study.graduation.util.exceptions.NotFoundInDataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +20,7 @@ public class UserService extends BaseService<User> implements UserDetailsService
 
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
     public UserService(CrudUserRepository repository, PasswordEncoder passwordEncoder) {
         super(repository, User.class);
         this.repository = repository;
@@ -81,7 +81,7 @@ public class UserService extends BaseService<User> implements UserDetailsService
         };
     }
 
-    public static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
+    private static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
         String password = user.getPassword();
         user.setPassword(StringUtils.hasText(password) ? passwordEncoder.encode(password) : password);
         user.setEmail(user.getEmail().toLowerCase());

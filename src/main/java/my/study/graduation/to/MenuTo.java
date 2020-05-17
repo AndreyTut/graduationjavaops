@@ -36,15 +36,4 @@ public class MenuTo {
     public void setDishes(Map<String, String> dishes) {
         this.dishes = dishes;
     }
-
-
-//
-//    @Override
-//    public String toString() {
-//        return "MenuTo{" +
-//                "restaurant=" + restaurant +
-//                ", dishes=" + dishes +
-//                ", id=" + id +
-//                '}';
-//    }
 }
