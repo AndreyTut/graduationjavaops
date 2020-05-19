@@ -12,7 +12,12 @@ public class RootController {
     @GetMapping
     @ResponseBody
     public String rootAnswer() {
-        return "<h1>Hello from my graduation project! ;)</h1>";
+        return "<body>\n" +
+                "<div align=\"center\" style=\"text-align: center; background-color: yellow\">\n" +
+                "    <h1>Welcome to my graduation project :)</h1>\n" +
+                "    <p>Look at readme.md for API description</p>\n" +
+                "</div>\n" +
+                "</body>\n";
     }
 
 
