@@ -1,4 +1,4 @@
-#My topjava graduation project
+# My topjava graduation project
 ***
 Given task description:
 
@@ -20,12 +20,12 @@ Build a voting system for deciding where to have lunch.
 
 ---
 
-##API
+## API
 
-###AdminRestController
+### AdminRestController
 
 
-####rest/admin/users
+#### rest/admin/users
 
 Method GET: Returns all users  
 Example:  
@@ -73,16 +73,16 @@ Example:
 curl --location --request DELETE 'http://localhost:8080/graduation/rest/admin/users/100012' \
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' \  
 
-####rest/admin/users/by
+#### rest/admin/users/by
 
 Method GET with parameter email: Returns user by email  
 Example:  
 curl --location --request GET 'http://localhost:8080/graduation/rest/admin/users/by?email=user@yandex.ru' \
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu' \
 
-###ProfileRestController
+### ProfileRestController
 
-####rest/profile
+#### rest/profile
 
 Method GET: Returns authorized user  
 Example:  
@@ -109,9 +109,9 @@ Method DELETE: Deletes authorized user
 Example:  
 curl --location --request DELETE 'http://localhost:8080/graduation/rest/profile' \  
 
-###RestaurantRestController
+### RestaurantRestController
 
-####rest/admin/restaurants   
+#### rest/admin/restaurants   
 Method GET: Returns all restaurants  
 Example:  
 curl --location --request GET 'http://localhost:8080/graduation/rest/admin/restaurants' \
@@ -146,9 +146,9 @@ Example:
 curl --location --request DELETE 'http://localhost:8080/graduation/rest/admin/restaurants/100015' \
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'
 
-###AdminMenuController
+### AdminMenuController
 
-####rest/admin/menus
+#### rest/admin/menus
 
 Method POST: Adds new menu with current date  
 Example:  
@@ -181,46 +181,46 @@ Example:
 curl --location --request GET 'http://localhost:8080/graduation/rest/admin/menus/100012' \
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'  
 
-###MenuRestController  
+### MenuRestController  
 
-####rest/menus/today  
+#### rest/menus/today  
 
 Method GET: Returns today's menus  
 Example:  
 curl --location --request GET 'http://localhost:8080/graduation/rest/menus/today' \
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'  
 
-####rest/menus/bydate  
+#### rest/menus/bydate  
 
 Method GET: Returns menus for the date given as parameter 'date'  
 Example:
 curl --location --request GET 'http://localhost:8080/graduation/rest/menus/bydate?date=2015-05-30' \
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'  
 
-###VoteRestController  
+### VoteRestController  
 
-####rest/votes  
+#### rest/votes  
 
 Method GET: Returns voting results for date given as parameter 'date'  
 Example:  
 curl --location --request GET 'http://localhost:8080/graduation/rest/votes?date=2015-05-30' \
 --header 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='  
 
-####rest/votes/today  
+#### rest/votes/today  
 
 Method GET: Returns current voting results  
 Example:  
 curl --location --request GET 'http://localhost:8080/graduation/rest/votes/today' \
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'  
 
-####rest/votes/vote
+#### rest/votes/vote
 
 Method POST: Gives authorized user's vote for menu which id was given as parameter 'menuId'  
 Example:  
 curl --location --request POST 'http://localhost:8080/graduation/rest/votes/vote?menuId=100012' \
 --header 'Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ='  
 
-####rest/votes/uservote  
+#### rest/votes/uservote  
 
 Method GET: Returns menu which authorized user voted on date given as parameter 'date'  
 Example:  
@@ -228,7 +228,7 @@ curl --location --request GET 'http://localhost:8080/graduation/rest/votes/userv
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'  
  
  ---
- ##Day scenario example  
+ ## Day scenario example  
  
  Admin adds menu of the day for few restaurants, one by one:
 
