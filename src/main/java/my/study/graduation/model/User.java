@@ -1,5 +1,7 @@
 package my.study.graduation.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -19,6 +21,7 @@ public class User extends AbstractNamedEntity {
     @Column
     @NotBlank
     @Size(min = 5, max = 150)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)

@@ -2,6 +2,8 @@ package my.study.graduation.service;
 
 import my.study.graduation.model.User;
 import my.study.graduation.repository.CrudUserRepository;
+import my.study.graduation.to.UserTo;
+import my.study.graduation.util.ToConverters;
 import my.study.graduation.util.exceptions.NotFoundInDataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
@@ -38,6 +41,15 @@ public class UserService extends BaseService<User> implements UserDetailsService
     @Override
     public User save(User user) {
         return super.save(prepareToSave(user, passwordEncoder));
+    }
+
+    @Transactional
+    public User save(UserTo userTo) {
+        User user = (userTo.getId() == null)
+                ? ToConverters.createNewFromTo(userTo)
+                : ToConverters.updateFromTo(get(userTo.getId()), userTo);
+        User user1 = super.save(prepareToSave(user, passwordEncoder));
+        return user1;
     }
 
     @Override

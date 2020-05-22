@@ -28,7 +28,7 @@ public class MenuRestController extends AbstractBaseControllerExceptionHandler {
     @GetMapping("/bydate")
     private ResponseEntity<List<MenuTo>> getForDay(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         List<MenuTo> list = service.getForDay(date);
-        return list != null && !list.isEmpty()
+        return list != null
                 ? new ResponseEntity<>(list, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -36,7 +36,7 @@ public class MenuRestController extends AbstractBaseControllerExceptionHandler {
     @GetMapping("/today")
     private ResponseEntity<List<MenuTo>> getToday() {
         List<MenuTo> list = service.getForToday();
-        return list != null && !list.isEmpty()
+        return list != null
                 ? new ResponseEntity<>(list, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

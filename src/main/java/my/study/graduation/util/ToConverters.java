@@ -1,11 +1,12 @@
 package my.study.graduation.util;
 
 import my.study.graduation.model.Menu;
+import my.study.graduation.model.Role;
+import my.study.graduation.model.User;
 import my.study.graduation.to.MenuTo;
+import my.study.graduation.to.UserTo;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ToConverters {
@@ -22,4 +23,16 @@ public class ToConverters {
                 .map(ToConverters::menuIntoMenuTo)
                 .collect(Collectors.toList());
     }
+
+    public static User createNewFromTo(UserTo userTo) {
+        return new User(userTo.getName(), userTo.getEmail(), userTo.getPassword(), EnumSet.of(Role.ROLE_USER), true);
+    }
+
+    public static User updateFromTo(User user, UserTo userTo) {
+        user.setName(userTo.getName());
+        user.setEmail(userTo.getEmail().toLowerCase());
+        user.setPassword(userTo.getPassword());
+        return user;
+    }
+
 }

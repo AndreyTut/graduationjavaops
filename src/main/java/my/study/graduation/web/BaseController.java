@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-public abstract class BaseController<T extends AbstractBaseEntity> extends AbstractBaseControllerExceptionHandler{
+public abstract class BaseController<T extends AbstractBaseEntity> extends AbstractBaseControllerExceptionHandler {
     private BaseService<T> service;
 
     public BaseController(BaseService<T> service) {
@@ -19,7 +19,7 @@ public abstract class BaseController<T extends AbstractBaseEntity> extends Abstr
     @GetMapping
     public ResponseEntity<List<T>> getAll() {
         List<T> users = service.getAll();
-        return users == null && !users.isEmpty()
+        return users == null
                 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
                 : new ResponseEntity<>(users, HttpStatus.OK);
     }

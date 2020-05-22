@@ -2,6 +2,7 @@ package my.study.graduation.web;
 
 import my.study.graduation.model.User;
 import my.study.graduation.service.UserService;
+import my.study.graduation.to.UserTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("rest/profile")
-public class ProfileRestController extends AbstractBaseControllerExceptionHandler{
+public class ProfileRestController extends AbstractBaseControllerExceptionHandler {
 
     private UserService service;
 
@@ -22,12 +23,12 @@ public class ProfileRestController extends AbstractBaseControllerExceptionHandle
     }
 
     @PutMapping()
-    public ResponseEntity<?> update(@Valid @RequestBody User user, Principal principal) {
+    public ResponseEntity<?> update(@Valid @RequestBody UserTo userTo, Principal principal) {
         Integer id = service.getId(principal.getName());
-        if (!id.equals(user.getId())) {
+        if (!id.equals(userTo.getId())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        service.save(user);
+        service.save(userTo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -41,4 +42,11 @@ public class ProfileRestController extends AbstractBaseControllerExceptionHandle
     public ResponseEntity<User> get(Principal principal) {
         return new ResponseEntity<>(service.get(principal.getName()), HttpStatus.OK);
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
+        service.save(userTo);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 }
