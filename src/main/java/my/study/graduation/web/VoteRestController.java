@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("rest/votes")
+@RequestMapping("rest/")
 public class VoteRestController extends AbstractBaseControllerExceptionHandler {
 
     private VoteService service;
@@ -29,27 +28,31 @@ public class VoteRestController extends AbstractBaseControllerExceptionHandler {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/admin/voteresult")
     public ResponseEntity<List<RestaurantWithVoices>> getVotes(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         return new ResponseEntity<>(service.getVotingResult(date), HttpStatus.OK);
     }
 
-    @GetMapping("/today")
+    @GetMapping("/admin/todayvoteresult")
     public ResponseEntity<List<RestaurantWithVoices>> getCurrentVotes() {
         return new ResponseEntity<>(service.getTodayVotingResult(), HttpStatus.OK);
     }
 
-    @PostMapping("/vote")
+    @PostMapping("/votes")
     public ResponseEntity<?> vote(@RequestParam int menuId, Principal principal) {
         int userId = userService.getId(principal.getName());
-        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
-            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
-        }
         service.vote(menuId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/uservote")
+    @PutMapping("/votes")
+    public ResponseEntity<?> changeVote(@RequestParam int menuId, Principal principal) {
+        int userId = userService.getId(principal.getName());
+        service.changeVote(menuId, userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/votedmenu")
     public ResponseEntity<MenuTo> getUserVote(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
                                               Principal principal) {
         int userId = userService.getId(principal.getName());

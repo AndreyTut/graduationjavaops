@@ -24,12 +24,12 @@ public class TestData {
     public static final Restaurant RESTAURANT_2 = new Restaurant(START_SEQ + 3, "Restor_2");
     public static final Restaurant RESTAURANT_3 = new Restaurant(START_SEQ + 4, "Restor_3");
 
-    public static Menu MENU = new Menu(START_SEQ + 5, RESTAURANT_2, Arrays.asList(new Dish(100009, "dish1", 1231))
+    public static Menu MENU = new Menu(START_SEQ + 5, RESTAURANT_2, Arrays.asList(new Dish(100011, "dish1", 1231))
             , LocalDate.of(2015, 5, 30));
-    public static Menu MENU1 = new Menu(START_SEQ + 6, RESTAURANT_3, Arrays.asList(new Dish(100010, "dish2", 1231),
-            new Dish(100011, "dish3", 1231)), LocalDate.of(2015, 5, 30));
+    public static Menu MENU1 = new Menu(START_SEQ + 6, RESTAURANT_3, Arrays.asList(new Dish(100012, "dish2", 1231),
+            new Dish(100010, "dish3", 1231)), LocalDate.of(2015, 5, 30));
     public static Menu MENU_NEW = new Menu(RESTAURANT_2, Arrays.asList(new Dish("dish", 1231)), LocalDate.now());
-    public static Menu MENU_UPD = new Menu(START_SEQ + 5, RESTAURANT_1, Arrays.asList(new Dish(100009, "dish1", 1231))
+    public static Menu MENU_UPD = new Menu(START_SEQ + 5, RESTAURANT_1, Arrays.asList(new Dish(100011, "dish1", 1231))
             , LocalDate.of(2015, 5, 30));
 
     public static final MenuTo MENU_TO_1 = ToConverters.menuIntoMenuTo(MENU);

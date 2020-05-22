@@ -3,6 +3,7 @@ package my.study.graduation.web;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import my.study.graduation.util.ErrorInfo;
 import my.study.graduation.util.exceptions.NotFoundInDataBaseException;
+import my.study.graduation.util.exceptions.VotingException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,10 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 
 public abstract class AbstractBaseControllerExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({NotFoundInDataBaseException.class, ConstraintViolationException.class,
-            MethodArgumentNotValidException.class, JsonMappingException.class})
+    @ExceptionHandler({
+            NotFoundInDataBaseException.class,
+            VotingException.class,
+            ConstraintViolationException.class,
+            MethodArgumentNotValidException.class,
+            JsonMappingException.class})
     @ResponseBody
-    ErrorInfo handlExceptions(HttpServletRequest req, Exception ex) {
+    ErrorInfo handleExceptions(HttpServletRequest req, Exception ex) {
         return new ErrorInfo(req.getRequestURL().toString(), ex, getRootCause(ex));
     }
 

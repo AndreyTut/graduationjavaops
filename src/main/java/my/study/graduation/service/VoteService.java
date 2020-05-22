@@ -4,11 +4,13 @@ import my.study.graduation.model.Vote;
 import my.study.graduation.repository.CrudVoteRepository;
 import my.study.graduation.to.MenuTo;
 import my.study.graduation.to.RestaurantWithVoices;
+import my.study.graduation.util.exceptions.VotingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,8 @@ public class VoteService {
 
     private CrudVoteRepository repository;
     private MenuService menuService;
+    //TODO Change to 11.00 after testing
+    private final LocalTime CRITICAL_TIME = LocalTime.of(23, 59);
 
     @Autowired
     public VoteService(CrudVoteRepository repository, MenuService menuService) {
@@ -32,7 +36,19 @@ public class VoteService {
 
     @Transactional
     public void vote(int menuId, int userId) {
-        Vote vote = repository.getByUserIdAndVotingDate(userId, LocalDate.now()).orElse(new Vote(userId, LocalDate.now()));
+        if (repository.getByUserIdAndVotingDate(userId, LocalDate.now()).isPresent()) {
+            throw new VotingException(String.format("user with id %d already voted ", userId));
+        }
+        repository.save(new Vote(userId, menuId, LocalDate.now()));
+    }
+
+    @Transactional
+    public void changeVote(int menuId, int userId) {
+        if (LocalTime.now().isAfter(CRITICAL_TIME)) {
+            throw new VotingException("Too late to change vote");
+        }
+        Vote vote = repository.getByUserIdAndVotingDate(userId, LocalDate.now())
+                .orElseThrow(() -> new VotingException(String.format("User with id %d hasn't voted yet", userId)));
         vote.setMenuId(menuId);
         repository.save(vote);
     }
