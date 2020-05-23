@@ -1,6 +1,7 @@
 package my.study.graduation.service;
 
 import my.study.graduation.model.Menu;
+import my.study.graduation.model.Restaurant;
 import my.study.graduation.repository.CrudMenuRepository;
 import my.study.graduation.to.MenuTo;
 import my.study.graduation.util.ToConverters;
@@ -18,10 +19,12 @@ import java.util.List;
 public class MenuService {
 
     private CrudMenuRepository repository;
+    private final RestaurantService restaurantService;
 
     @Autowired
-    public MenuService(CrudMenuRepository repository) {
+    public MenuService(CrudMenuRepository repository, RestaurantService restaurantService) {
         this.repository = repository;
+        this.restaurantService = restaurantService;
     }
 
     public List<MenuTo> getForDay(LocalDate localDate) {
@@ -37,6 +40,13 @@ public class MenuService {
 
     @Transactional
     public Menu save(Menu menu) {
+        return repository.save(menu);
+    }
+
+    @Transactional
+    public Menu save(MenuTo menuTo) {
+        Menu menu = ToConverters.menuToIntoMenu(menuTo);
+        menu.setRestaurant(restaurantService.get(menuTo.getRestaurant_id()));
         return repository.save(menu);
     }
 

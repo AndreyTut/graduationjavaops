@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import my.study.graduation.util.ErrorInfo;
 import my.study.graduation.util.exceptions.NotFoundInDataBaseException;
 import my.study.graduation.util.exceptions.VotingException;
+import my.study.graduation.util.exceptions.WrongMenuDateException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,7 +21,8 @@ public abstract class AbstractBaseControllerExceptionHandler {
             VotingException.class,
             ConstraintViolationException.class,
             MethodArgumentNotValidException.class,
-            JsonMappingException.class})
+            JsonMappingException.class,
+            WrongMenuDateException.class})
     @ResponseBody
     ErrorInfo handleExceptions(HttpServletRequest req, Exception ex) {
         return new ErrorInfo(req.getRequestURL().toString(), ex, getRootCause(ex));
