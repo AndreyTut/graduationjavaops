@@ -6,6 +6,7 @@ import my.study.graduation.model.Role;
 import my.study.graduation.model.User;
 import my.study.graduation.to.MenuTo;
 import my.study.graduation.to.UserTo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;

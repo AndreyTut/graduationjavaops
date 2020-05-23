@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -34,6 +35,7 @@ public class VoteServiceTest {
     private MenuService menuService;
 
     @Test
+    @Transactional
     public void vote() {
         Menu saved = menuService.save(MENU_NEW);
         service.vote(saved.getId(), START_SEQ);
