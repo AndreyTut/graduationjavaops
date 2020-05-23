@@ -18,6 +18,7 @@
         <jackson-json.version>2.10.1</jackson-json.version>
         <tomcat.version>9.0.27</tomcat.version>
 
+        <ehcache.version>3.8.1</ehcache.version>
 
         <spring.version>5.2.0.RELEASE</spring.version>
         <spring-data-jpa.version>2.2.0.RELEASE</spring-data-jpa.version>
@@ -210,6 +211,20 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>${jackson-json.version}</version>
         </dependency>
+
+        <!-- Cache -->
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <scope>runtime</scope>
+            <version>${ehcache.version}</version>
+        </dependency>
+
 
 
     </dependencies>

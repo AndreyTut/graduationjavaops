@@ -7,6 +7,7 @@ import my.study.graduation.to.MenuTo;
 import my.study.graduation.util.ToConverters;
 import my.study.graduation.util.exceptions.NotFoundInDataBaseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +45,7 @@ public class MenuService {
         return repository.save(menu);
     }
 
+    @CacheEvict(value = "menuTo", allEntries = true)
     @Transactional
     public Menu create(MenuTo menuTo) {
         Menu menu = ToConverters.menuToIntoMenu(menuTo);
@@ -56,6 +58,7 @@ public class MenuService {
     }
 
     @Transactional
+    @CacheEvict(value = "menuTo", allEntries = true)
     public void updateDishes(MenuTo menuTo) {
         Menu menu = get(menuTo.getId());
         dishRepository.deleteByMenu_Id(menuTo.getId());
