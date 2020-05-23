@@ -5,10 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Repository
+@Transactional(readOnly = true)
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
 
 
@@ -21,5 +23,6 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u.id FROM User u WHERE u.email=:email")
     Optional<Integer> getIdByEmail(@Param("email") String email);
 
+    @Transactional
     int deleteUserById(int id);
 }
