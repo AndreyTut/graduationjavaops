@@ -4,7 +4,7 @@ package my.study.graduation.web;
 import my.study.graduation.model.Menu;
 import my.study.graduation.service.MenuService;
 import my.study.graduation.to.MenuTo;
-import my.study.graduation.util.exceptions.WrongMenuDateException;
+import my.study.graduation.util.exceptions.WrongMenuException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -28,18 +28,24 @@ public class AdminMenuController extends AbstractBaseControllerExceptionHandler 
     @PostMapping
     private ResponseEntity<MenuTo> create(@RequestBody @Valid MenuTo menuTo) {
         menuTo.setDate(LocalDate.now());
-        service.save(menuTo);
+        service.create(menuTo);
         return new ResponseEntity<>(menuTo, HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    private ResponseEntity<MenuTo> update(@RequestBody @Valid MenuTo menuTo) {
+        service.updateDishes(menuTo);
+        return new ResponseEntity<>(menuTo, HttpStatus.OK);
     }
 
     @PostMapping("/future")
     private ResponseEntity<MenuTo> createTomorrow(@RequestBody @Valid MenuTo menuTo,
                                                   @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        if (date.isBefore(LocalDate.now())){
-            throw new WrongMenuDateException("Date must be future");
+        if (date.isBefore(LocalDate.now())) {
+            throw new WrongMenuException("Date must be future");
         }
         menuTo.setDate(date);
-        service.save(menuTo);
+        service.create(menuTo);
         return new ResponseEntity<>(menuTo, HttpStatus.CREATED);
     }
 
@@ -47,5 +53,4 @@ public class AdminMenuController extends AbstractBaseControllerExceptionHandler 
     private Menu get(@PathVariable int id) {
         return service.get(id);
     }
-
 }
