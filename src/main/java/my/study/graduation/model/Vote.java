@@ -14,7 +14,7 @@ public class Vote extends AbstractBaseEntity {
     @Column(name = "menu_id")
     private Integer menuId;
 
-    @Column(name = "day")
+    @Column(name = "date")
     private LocalDate votingDate;
 
 
