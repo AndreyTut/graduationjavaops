@@ -15,14 +15,14 @@ public class Dish extends AbstractNamedEntity {
     @JoinColumn(name = "menu_id", nullable = false)
     private Menu menu;
 
-    public Dish(int id, String name, int price) {
+    public Dish(Integer id, String name, int price) {
         super(id, name);
         this.name = name;
         this.price = price;
     }
 
     public Dish(String name, int price) {
-        super(null, name);
+        this(null, name, price);
         this.name = name;
         this.price = price;
     }

@@ -33,7 +33,7 @@ public class User extends AbstractNamedEntity {
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
     private boolean enabled;
 
-    public User(int id, String name, String email, String password, Set<Role> roles, boolean enabled) {
+    public User(Integer id, String name, String email, String password, Set<Role> roles, boolean enabled) {
         super(id, name);
         this.enabled = enabled;
         this.name = name;
@@ -47,12 +47,7 @@ public class User extends AbstractNamedEntity {
     }
 
     public User(String name, String email, String password, Set<Role> roles, boolean enabled) {
-        super(name);
-        this.enabled = enabled;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
+        this(null, name, email, password, roles, enabled);
     }
 
     public String getName() {
