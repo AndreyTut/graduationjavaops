@@ -37,7 +37,10 @@ public class VoteService {
     @Transactional
     public void vote(int menuId, int userId) {
         if (repository.getByUserIdAndVotingDate(userId, LocalDate.now()).isPresent()) {
-            throw new VotingException(String.format("user with id %d already voted ", userId));
+            throw new VotingException(String.format("User with id %d already voted ", userId));
+        }
+        if (!containsWithId(menuService.getForToday(), menuId)) {
+            throw new VotingException("User can vote only for today menu");
         }
         repository.save(new Vote(userId, menuId, LocalDate.now()));
     }
@@ -47,6 +50,11 @@ public class VoteService {
         if (LocalTime.now().isAfter(CRITICAL_TIME)) {
             throw new VotingException("Too late to change vote");
         }
+
+        if (!containsWithId(menuService.getForToday(), menuId)) {
+            throw new VotingException("User can vote only for today menu");
+        }
+
         Vote vote = repository.getByUserIdAndVotingDate(userId, LocalDate.now())
                 .orElseThrow(() -> new VotingException(String.format("User with id %d hasn't voted yet", userId)));
         vote.setMenuId(menuId);
@@ -73,4 +81,14 @@ public class VoteService {
         Optional<Vote> userVote = repository.getByUserIdAndVotingDate(id, localDate);
         return userVote.map(vote -> menuIntoMenuTo(menuService.get(vote.getMenuId()))).orElse(null);
     }
+
+    private boolean containsWithId(List<MenuTo> list, int menuId) {
+        for (MenuTo menuTo : list) {
+            if (menuTo.getId() == menuId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
