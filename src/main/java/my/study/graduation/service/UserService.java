@@ -16,16 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
-public class UserService extends BaseService<User> implements UserDetailsService {
+public class UserService implements UserDetailsService {
     private CrudUserRepository repository;
 
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserService(CrudUserRepository repository, PasswordEncoder passwordEncoder) {
-        super(repository, User.class);
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -34,13 +34,30 @@ public class UserService extends BaseService<User> implements UserDetailsService
         return repository.getByEmail(email).orElseThrow(() -> new NotFoundInDataBaseException("Not found User with email: " + email));
     }
 
+    public User get(int id) {
+        return repository.getById(id).orElseThrow(() -> new NotFoundInDataBaseException(User.class, id));
+    }
+
+    public List<User> getAll() {
+        return repository.findAll();
+    }
+
+    @Transactional
+    public void delete(int id) {
+        if (repository.deleteUserById(id) == 0) {
+            throw new NotFoundInDataBaseException(User.class, id);
+        }
+    }
+
+
+
     public Integer getId(String email) {
         return repository.getIdByEmail(email).orElseThrow(() -> new NotFoundInDataBaseException("Not found User with email: " + email));
     }
 
-    @Override
+    @Transactional
     public User save(User user) {
-        return super.save(prepareToSave(user, passwordEncoder));
+        return repository.save(prepareToSave(user, passwordEncoder));
     }
 
     @Transactional
@@ -48,7 +65,7 @@ public class UserService extends BaseService<User> implements UserDetailsService
         User user = (userTo.getId() == null)
                 ? ToConverters.createNewFromTo(userTo)
                 : ToConverters.updateFromTo(get(userTo.getId()), userTo);
-        User user1 = super.save(prepareToSave(user, passwordEncoder));
+        User user1 = repository.save(prepareToSave(user, passwordEncoder));
         return user1;
     }
 
