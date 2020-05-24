@@ -77,7 +77,7 @@ public class VoteService {
         return getVotingResult(LocalDate.now());
     }
 
-    public MenuTo getUserVote(int id, LocalDate localDate) {
+    public MenuTo getVotedMenu(int id, LocalDate localDate) {
         Optional<Vote> userVote = repository.getByUserIdAndVotingDate(id, localDate);
         return userVote.map(vote -> menuIntoMenuTo(menuService.get(vote.getMenuId()))).orElse(null);
     }

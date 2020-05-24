@@ -4,7 +4,6 @@ import my.study.graduation.model.Menu;
 import my.study.graduation.to.MenuTo;
 import my.study.graduation.to.RestaurantWithVoices;
 import my.study.graduation.util.ToConverters;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import java.util.*;
 
 import static my.study.graduation.service.TestData.*;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.*;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -39,7 +37,7 @@ public class VoteServiceTest {
     public void vote() {
         Menu saved = menuService.save(MENU_NEW);
         service.vote(saved.getId(), START_SEQ);
-        assertThat(service.getUserVote(START_SEQ, LocalDate.now()))
+        assertThat(service.getVotedMenu(START_SEQ, LocalDate.now()))
                 .isEqualToComparingFieldByField(ToConverters.menuIntoMenuTo(saved));
     }
 
@@ -51,7 +49,7 @@ public class VoteServiceTest {
 
     @Test
     public void getUserVote() {
-        assertThat(service.getUserVote(100000, LocalDate.of(2015, 5, 30)))
+        assertThat(service.getVotedMenu(100000, LocalDate.of(2015, 5, 30)))
                 .isEqualToComparingFieldByField(MENU_TO_1);
     }
 
