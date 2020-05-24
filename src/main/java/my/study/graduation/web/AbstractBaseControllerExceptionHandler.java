@@ -17,16 +17,24 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class AbstractBaseControllerExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
-            NotFoundInDataBaseException.class,
-            VotingException.class,
-            ConstraintViolationException.class,
             MethodArgumentNotValidException.class,
-            JsonMappingException.class,
-            WrongMenuException.class})
+            JsonMappingException.class})
     @ResponseBody
-    ErrorInfo handleExceptions(HttpServletRequest req, Exception ex) {
+    ErrorInfo handleBadRequest(HttpServletRequest req, Exception ex) {
         return new ErrorInfo(req.getRequestURL().toString(), ex, getRootCause(ex));
     }
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler({
+            VotingException.class,
+            NotFoundInDataBaseException.class,
+            ConstraintViolationException.class,
+            WrongMenuException.class})
+    @ResponseBody
+    ErrorInfo handleUnprocEntity(HttpServletRequest req, Exception ex) {
+        return new ErrorInfo(req.getRequestURL().toString(), ex, getRootCause(ex));
+    }
+
 
     private Throwable getRootCause(Throwable t) {
         Throwable result = t;
