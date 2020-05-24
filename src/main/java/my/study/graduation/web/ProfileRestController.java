@@ -22,7 +22,7 @@ public class ProfileRestController extends AbstractBaseControllerExceptionHandle
         this.service = service;
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody UserTo userTo, Principal principal) {
         Integer id = service.getId(principal.getName());
         if (!id.equals(userTo.getId())) {
@@ -33,9 +33,9 @@ public class ProfileRestController extends AbstractBaseControllerExceptionHandle
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(Principal principal) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(Principal principal) {
         service.delete(service.getId(principal.getName()));
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
@@ -44,9 +44,9 @@ public class ProfileRestController extends AbstractBaseControllerExceptionHandle
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody UserTo userTo) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void register(@Valid @RequestBody UserTo userTo) {
         service.save(userTo);
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

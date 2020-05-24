@@ -60,8 +60,8 @@ public class MenuService {
     @Transactional
     @CacheEvict(value = "menuTo", allEntries = true)
     public void updateDishes(MenuTo menuTo) {
-        Menu menu = get(menuTo.getId());
         dishRepository.deleteByMenu_Id(menuTo.getId());
+        Menu menu = get(menuTo.getId());
         menu.setDishes(ToConverters.dishesFromTo(menuTo.getDishes()));
         repository.save(menu);
     }

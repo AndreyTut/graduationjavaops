@@ -27,17 +27,17 @@ public class VoteRestController extends AbstractBaseControllerExceptionHandler {
     }
 
     @PostMapping("/votes")
-    public ResponseEntity<?> vote(@RequestParam int menuId, Principal principal) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void vote(@RequestParam int menuId, Principal principal) {
         int userId = userService.getId(principal.getName());
         service.vote(menuId, userId);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/votes")
-    public ResponseEntity<?> changeVote(@RequestParam int menuId, Principal principal) {
+    @ResponseStatus(HttpStatus.OK)
+    public void changeVote(@RequestParam int menuId, Principal principal) {
         int userId = userService.getId(principal.getName());
         service.changeVote(menuId, userId);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/votedmenu")

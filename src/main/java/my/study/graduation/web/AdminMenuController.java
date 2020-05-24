@@ -26,27 +26,27 @@ public class AdminMenuController extends AbstractBaseControllerExceptionHandler 
     }
 
     @PostMapping
-    private ResponseEntity<MenuTo> create(@RequestBody @Valid MenuTo menuTo) {
+    @ResponseStatus(HttpStatus.CREATED)
+    private void create(@RequestBody @Valid MenuTo menuTo) {
         menuTo.setDate(LocalDate.now());
         service.create(menuTo);
-        return new ResponseEntity<>(menuTo, HttpStatus.CREATED);
     }
 
     @PutMapping
-    private ResponseEntity<MenuTo> update(@RequestBody @Valid MenuTo menuTo) {
+    @ResponseStatus(HttpStatus.OK)
+    private void update(@RequestBody @Valid MenuTo menuTo) {
         service.updateDishes(menuTo);
-        return new ResponseEntity<>(menuTo, HttpStatus.OK);
     }
 
     @PostMapping("/future")
-    private ResponseEntity<MenuTo> createTomorrow(@RequestBody @Valid MenuTo menuTo,
-                                                  @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+    @ResponseStatus(HttpStatus.CREATED)
+    private void createTomorrow(@RequestBody @Valid MenuTo menuTo,
+                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         if (date.isBefore(LocalDate.now())) {
             throw new WrongMenuException("Date must be future");
         }
         menuTo.setDate(date);
         service.create(menuTo);
-        return new ResponseEntity<>(menuTo, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

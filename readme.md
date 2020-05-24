@@ -27,7 +27,7 @@ Build a voting system for deciding where to have lunch.
 
 #### rest/admin/users
 
-Method GET: Returns all users  
+##### Method GET: Returns all users  
 Example:  
 curl --location --request GET 'http://localhost:8080/graduation/rest/admin/users' \
 --header 'Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu'  
