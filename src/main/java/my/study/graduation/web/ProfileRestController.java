@@ -23,13 +23,11 @@ public class ProfileRestController extends AbstractBaseControllerExceptionHandle
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@Valid @RequestBody UserTo userTo, Principal principal) {
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@Valid @RequestBody UserTo userTo, Principal principal) {
         Integer id = service.getId(principal.getName());
-        if (!id.equals(userTo.getId())) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        userTo.setId(id);
         service.save(userTo);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping

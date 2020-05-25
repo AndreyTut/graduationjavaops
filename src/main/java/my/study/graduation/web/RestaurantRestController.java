@@ -1,7 +1,6 @@
 package my.study.graduation.web;
 
 import my.study.graduation.model.Restaurant;
-import my.study.graduation.model.User;
 import my.study.graduation.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
